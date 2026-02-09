@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Data Journey</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #141414; color: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .container { height: 100vh; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
+        
+        /* Netflix Style Header */
+        .header h1 { color: #E50914; font-size: 28px; margin-bottom: 5px; }
+        .header p { color: #b3b3b3; font-size: 14px; }
+
+        /* Story Visual Box */
+        .visual-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 25px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: 0.5s;
+        }
+
+        .icon-box { font-size: 50px; margin-bottom: 20px; }
+        .month-label { color: #E50914; font-weight: 900; font-size: 14px; text-transform: uppercase; }
+        .story-title { font-size: 24px; margin: 15px 0; font-weight: 700; }
+        .story-desc { font-size: 16px; color: #cccccc; line-height: 1.5; }
+
+        /* Progress Dots */
+        .dots-container { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+        .dot { width: 8px; height: 8px; background: #333; border-radius: 50%; }
+        .dot.active { background: #E50914; width: 20px; border-radius: 10px; }
+
+        .btn-next {
+            background: #E50914; color: white; border: none; padding: 18px;
+            border-radius: 8px; width: 100%; font-size: 18px; font-weight: bold;
+            cursor: pointer; margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>NETFLIX <span style="color:white; font-size:18px;">Mission</span></h1>
+            <p>Hai Harshith, let's build Netflix together!</p>
+        </div>
+
+        <div class="dots-container" id="dots"></div>
+
+        <div class="visual-box" id="contentBox">
+            </div>
+
+        <button class="btn-next" onclick="moveNext()" id="nextBtn">Continue Journey →</button>
+    </div>
+
+    <script>
+        const netflixStory = [
+            { month: "Month 1-2", icon: "📱", title: "Data Collection", desc: "First, we find out which movies users in India are watching late at night using Python.", tool: "Python & Data Science Foundation" },
+            { month: "Month 3", icon: "📊", title: "User Behavior", desc: "We use Statistics to see if people pause horror movies more than comedies.", tool: "Statistics & Math" },
+            { month: "Month 4-5", icon: "🎬", title: "Smart Suggestions", desc: "We build an ML model. If you watch 'Kantara', Netflix suggests similar movies automatically.", tool: "Machine Learning (Scikit-Learn)" },
+            { month: "Month 6", icon: "🖥️", title: "Content Dashboard", desc: "We show the Netflix CEO which regional movies are trending using visual reports.", tool: "Data Visualization (Tableau)" },
+            { month: "Month 7-8", icon: "🗣️", title: "Voice & Search", desc: "We use AI so Netflix can understand when you say 'Play action movies' in English or Kannada.", tool: "AI & NLP (TensorFlow)" },
+            { month: "Month 9-10", icon: "🚀", title: "Global Launch", desc: "Finally, we put this 'Netflix Brain' on the Cloud so 200 million people can watch without lag.", tool: "Cloud Deployment (AWS)" }
+        ];
+
+        let current = 0;
+
+        function updateUI() {
+            const box = document.getElementById('contentBox');
+            const dots = document.getElementById('dots');
+            const data = netflixStory[current];
+
+            dots.innerHTML = netflixStory.map((_, i) => `<div class="dot ${i === current ? 'active' : ''}"></div>`).join('');
+
+            box.style.opacity = 0;
+            setTimeout(() => {
+                box.innerHTML = `
+                    <div class="month-label">${data.month}</div>
+                    <div class="icon-box">${data.icon}</div>
+                    <div class="story-title">${data.title}</div>
+                    <p class="story-desc">${data.desc}</p>
+                    <p style="margin-top:20px; font-size:12px; color:#E50914; font-weight:bold;">${data.tool}</p>
+                `;
+                box.style.opacity = 1;
+            }, 300);
+
+            if(current === netflixStory.length - 1) {
+                document.getElementById('nextBtn').innerText = "Finish Netflix Mission! ✅";
+                document.getElementById('nextBtn').onclick = () => window.location.href='internship.html';
+            }
+        }
+
+        function moveNext() {
+            if(current < netflixStory.length - 1) {
+                current++;
+                updateUI();
+            }
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
